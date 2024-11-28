@@ -1,0 +1,18 @@
+V2.0 evaluation:
+    1 - update language adapter 
+        -> angles are correct for radians
+        -> updated terms to include 'close hauled' 
+        -> optimal angle between 0.5 and 1 (or -0.5 and -1)
+    2 - sub-goal position matching should be rounded to 1 decimal place
+        -> updated engine observation to be x:2dp and angle:1dp
+    3 - new env without supervised reward for comparison 
+        -> systematic eval
+        -> added local_config parameter
+    4 - Evaluate Engine vs Language form
+        -> no easy way to encode prior action to default form
+    5 - Instr search not correctly fixing start_obs
+        -> for now, limit start x = 0 for simplicity
+        -> also makes training results comparable
+        -> use repeats instead of seeds
+    6 - Updated language adapter V2
+        -> added harbor or beach sides instead of left/right
