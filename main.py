@@ -19,9 +19,9 @@ from environment.env import Environment
 def main():
     # ------ Load Configs -----------------------------------------
     # Meta parameters
-    ExperimentConfig = TestingSetupConfig("./config.json").state_configs
+    ExperimentConfig = TestingSetupConfig("./configs/config.json").state_configs
     # Local Parameters
-    ProblemConfig = ConfigSetup("./config_local.json").state_configs
+    ProblemConfig = ConfigSetup("./configs/config_local.json").state_configs
 
     # Specify save dir
     time = datetime.now().strftime("%d-%m-%Y_%H-%M")
