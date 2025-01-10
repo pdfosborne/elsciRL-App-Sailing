@@ -12,9 +12,11 @@ from elsciRL.config import TestingSetupConfig
 from elsciRL.config_local import ConfigSetup
 # ====== LOCAL IMPORTS ==========================================
 # ------ Local Environment --------------------------------------
-from environment.env import Environment
-# ------ Visual Analysis -----------------------------------------------
-
+from environment.engine import Engine
+# ------ ADAPTERS -----------------------------------------------
+from adapters.default import DefaultAdapter
+from adapters.language import LanguageAdapter
+ADAPTERS = {"Default": DefaultAdapter, "Language": LanguageAdapter}
 
 def main():
     # ------ Load Configs -----------------------------------------
@@ -36,7 +38,7 @@ def main():
     instruction_results = None
     
     search_agent = elsciRL_SEARCH(Config=ExperimentConfig, LocalConfig=ProblemConfig, 
-                        Environment=Environment,
+                        Engine=Engine, Adapters=ADAPTERS,
                         save_dir = save_dir+'/Reinforced_Instr_Experiment',
                         num_plans = num_plans, number_exploration_episodes=num_explor_epi, sim_threshold=sim_threshold,
                         feedback_increment = 0.1, feedback_repeats=1,
@@ -51,9 +53,9 @@ def main():
     # Take Instruction path now defined with reinforced+unsupervised sub-goal locations and train to these
     # Init experiment setup with sub-goal defined
     reinforced_experiment = elsciRL_OPTIMIZE(Config=ExperimentConfig, LocalConfig=ProblemConfig, 
-                    Environment=Environment,
+                    Engine=Engine, Adapters=ADAPTERS,
                     save_dir=save_dir+'/Reinforced_Instr_Experiment', show_figures = 'No', window_size=0.1,
-                    instruction_path=None, predicted_path=instruction_results, instruction_episode_ratio=0.05,
+                    instruction_path=instruction_results, predicted_path=None, instruction_episode_ratio=0.05,
                     instruction_chain=True, instruction_chain_how='exact' )
     reinforced_experiment.train()
     reinforced_experiment.test()
@@ -61,7 +63,7 @@ def main():
     # --------------------------------------------------------------------
     # Flat Baselines
     flat = STANDARD_RL(Config=ExperimentConfig, LocalConfig=ProblemConfig, 
-                Environment=Environment,
+                Engine=Engine, Adapters=ADAPTERS,
                 save_dir=save_dir, show_figures = 'No', window_size=0.1)
     flat.train()  
     flat.test()

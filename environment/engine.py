@@ -5,21 +5,44 @@
 import numpy as np
 
 class Engine:
-    """Defines the environment function from the generator engine.
+    def __init__(self, local_setup_info:dict={}) -> None:
+        """Defines the environment function from the generator engine.
        Expects the following:
         - reset() to reset the env a start position(s)
         - step() to make an action and update the game state
         - legal_moves_generator() to generate the list of legal moves
-    """
-    def __init__(self, supervised_rewards:str="True", y_limit:int=25, obs_precision:int=4) -> None:
-        """Initialize Engine"""
+        """
+        # Ledger of the environment with meta information for the problem
+        ledger_required = {
+            'id': 'Unique Problem ID',
+            'type': 'Language/Numeric',
+            'description': 'Problem Description',
+            'goal': 'Goal Description'
+            }
+        
+        ledger_optional = {
+            'reward': 'Reward Description',
+            'punishment': 'Punishment Description (if any)',
+            'state': 'State Description',
+            'constraints': 'Constraints Description',
+            'action': 'Action Description',
+            'author': 'Author',
+            'year': 'Year',
+            'render_data':{'render_mode':'rgb_array', 
+                            'render_fps':4}
+        }
+        ledger_gym_compatibility = {
+            # Limited to discrete actions for now, set to arbitrary large number if uncertain
+            'action_space_size':4, 
+        }
+        # --------------------------
         #self.Environment = "Engine Initialization"
         self.x_limit = 10
-        self.y_limit = y_limit
+        self.y_limit = local_setup_info['y_limit']
         self.angle_limit = np.pi / 2
-        self.supervised_rewards = supervised_rewards
+        self.supervised_rewards = local_setup_info['supervised_rewards']
         # Precision parameter
-        self.obs_precision = obs_precision
+        self.obs_precision = local_setup_info['obs_precision']
     # --------------------------
     # Defined functions used by engine source
     @staticmethod
@@ -82,8 +105,10 @@ class Engine:
             terminated = True
         else:
             terminated = False
+
+        info = None
         
-        return obs, reward, terminated
+        return obs, reward, terminated, info
 
     def legal_move_generator(self, obs:any=None):
         """Define legal moves at each position"""
@@ -92,3 +117,11 @@ class Engine:
         legal_moves = [0, 1]
         return legal_moves
 
+    def render(self, state:any=None):
+        """Render the environment."""
+        render = self.Environment.render()
+        return render
+    
+    def close(self):
+        """Close/Exit the environment."""
+        self.Environment.close()

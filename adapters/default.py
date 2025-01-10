@@ -30,7 +30,7 @@ class DefaultAdapter:
     # -------------------------------------------------------------
 
     _cached_state_idx: Dict[str, int] = dict()
-    def __init__(self):
+    def __init__(self, setup_info:dict={}) -> None:
         # ------ State Encoder ---------------------------------------
         # Initialise encoder based on all possible env states
         all_possible_x = [i*-1 for i in range(40)]

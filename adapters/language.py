@@ -8,7 +8,7 @@ from elsciRL.encoders.sentence_transformer_MiniLM_L6v2 import LanguageEncoder
 class LanguageAdapter:
     _cached_state_idx: Dict[str, int] = dict()
 
-    def __init__(self):
+    def __init__(self, setup_info:dict={}) -> None:
         # Language encoder doesn't require any preset knowledge of env to use
         self.encoder = LanguageEncoder()
     
