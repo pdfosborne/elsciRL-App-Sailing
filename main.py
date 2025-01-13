@@ -17,6 +17,9 @@ from environment.engine import Engine
 from adapters.default import DefaultAdapter
 from adapters.language import LanguageAdapter
 ADAPTERS = {"Default": DefaultAdapter, "Language": LanguageAdapter}
+# ------ Visual Analysis -----------------------------------------------
+from elsciRL.analysis.combined_variance_visual import combined_variance_analysis_graph as COMBINED_VARIANCE_ANALYSIS_GRAPH
+
 
 def main():
     # ------ Load Configs -----------------------------------------
@@ -68,6 +71,8 @@ def main():
     flat.train()  
     flat.test()
     # --------------------------------------------------------------------
+    COMBINED_VARIANCE_ANALYSIS_GRAPH(save_dir, 'TRAINING', show_figures='Yes')
+    COMBINED_VARIANCE_ANALYSIS_GRAPH(save_dir, 'TESTING', show_figures='Yes')
 
 
 if __name__=='__main__':
