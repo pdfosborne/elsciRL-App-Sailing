@@ -118,9 +118,52 @@ class Engine:
         return legal_moves
 
     def render(self, state:any=None):
-        """Render the environment."""
-        render = self.Environment.render()
-        return render
+        """Render the environment.
+        Args:
+            state[x,y,angle]: The current state of the environment.
+                - x: The horizontal position of the sailboat.
+                - y: The vertical position of the sailboat.
+                - angle: The angle of the sailboat.
+            Returns:
+                render: The rendered environment."""            
+        x = float(state.split('_')[0])
+        y = 5 # Not output by environment so using dummy value for display
+        angle = float(state.split('_')[1])
+        print("PLOT DATA = ", x, y, angle)
+        # Angle is bearing into wind -pi/2 < angle < pi/2
+        if angle < np.pi/2:
+            U = np.sin(angle)
+            V = np.cos(angle)
+        elif angle == np.pi/2:
+            U = 1
+            V = 0
+        elif angle == -np.pi/2:
+            U = -1
+            V = 0
+        else:
+            U = np.sin(angle)
+            V = -np.cos(angle)
+
+        DPI = 128
+        fig, ax = plt.subplots(figsize=(5,5), dpi = DPI)
+        ax.scatter(x,y,c='b',marker='x',alpha=1)
+        ax.quiver(x,y,U,V,angles='uv',scale_units='xy')
+        if y > 1:
+            ax.text(x+0.5,y-1,'Sailboat',color='b')
+
+        # Draw wind direction
+        ax.quiver(0,25,0,-1,angles='uv',scale_units='xy',color='r')
+        ax.text(0,25.25,'Wind',color='r')
+
+
+        ax.plot([10,10],[0,25],'r')
+        ax.plot([-10,-10],[0,25],'r')
+        ax.set_title("Sailboat Position with Direction against Wind")
+        ax.set_xlabel(f"Horizontal Position ({x})")
+        ax.set_ylabel(f"Vertical Position ({y})")
+        # Save as rgba array 
+        # https://stackoverflow.com/questions/7821518/save-plot-to-numpy-array
+        return fig
     
     def close(self):
         """Close/Exit the environment."""
