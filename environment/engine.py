@@ -3,6 +3,7 @@
 # - Simple sailing simulator from https://github.com/PPierzc/ai-learns-to-sail
 #   - https://github.com/PPierzc/ai-learns-to-sail/blob/master/tasks/channel.py
 import numpy as np
+import matplotlib.pyplot as plt
 
 class Engine:
     def __init__(self, local_setup_info:dict={}) -> None:
