@@ -81,8 +81,8 @@ class Analysis:
                     ax.plot([10,10],[0,25],'r')
                     ax.plot([-10,-10],[0,25],'r')
                     figure.suptitle(exp_title + "\n Sailboat Path for each Trained Agent's Output Policy")
-                    ax.xlabel("Horizontal Position (x)")
-                    ax.ylabel("Vertical Position (y)")
+                    figure.xlabel("Horizontal Position (x)")
+                    figure.ylabel("Vertical Position (y)")
                 
                 #save_path = os.path.join(path, folder, 'trace_plot.png')
 
