@@ -24,7 +24,7 @@ class Analysis:
         path_folders = os.listdir(path)
         plot_list = []
         for n,folder in enumerate(path_folders):
-            plt.clf()
+            plt.close()
             if os.path.isdir(path+'/'+folder):
                 if (folder=='Supervised_Instr_Experiment')|(folder=='Standard_Experiment'):
                     exp_path = path + '/' + folder
