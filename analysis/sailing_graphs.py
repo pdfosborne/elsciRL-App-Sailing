@@ -22,12 +22,11 @@ class Analysis:
         improved plot titles."""
         path = self.save_dir 
         path_folders = os.listdir(path)
-        plot_list = []
+        plot_list = {}
         for n,folder in enumerate(path_folders):
-            plt.close()
+            figure = plt.figure()
             if os.path.isdir(path+'/'+folder):
-                if (folder=='Supervised_Instr_Experiment')|(folder=='Standard_Experiment'):
-                    exp_path = path + '/' + folder
+                exp_path = path + '/' + folder
                 exp_path_folders = os.listdir(exp_path)
 
                 count_check = 0
@@ -47,7 +46,7 @@ class Analysis:
                 # Re-applies actions made by agent to observe path
                 exp_title = folder
                 
-                plt.scatter(0,0,marker='x', color='b')
+                figure.scatter(0,0,marker='x', color='b')
                 training_policies = policy_list
                 for action_list in training_policies:
                     x = 0
@@ -69,27 +68,28 @@ class Analysis:
                         y_list.append(y)
 
                     if np.abs(x_list[-1])>=10:
-                        plt.plot(x_list,y_list,'r',alpha=0.75)
+                        figure.plot(x_list,y_list,'r',alpha=0.75)
                     elif np.abs(y_list[-1])>=24:
-                        plt.plot(x_list,y_list,'g',alpha=0.75)
+                        figure.plot(x_list,y_list,'g',alpha=0.75)
                     elif np.abs(y_list[-1])<0:
-                        plt.plot(x_list,y_list,'r',alpha=0.75)
+                        figure.plot(x_list,y_list,'r',alpha=0.75)
                     else:
-                        plt.plot(x_list,y_list,'k',alpha=0.75)
+                        figure.plot(x_list,y_list,'k',alpha=0.75)
                         
-                    plt.scatter(x_list[-1],y_list[-1],marker='x', color='r')
-                    plt.plot([10,10],[0,25],'r')
-                    plt.plot([-10,-10],[0,25],'r')
-                    plt.title(exp_title + "\n Sailboat Path for each Trained Agent's Output Policy")
-                    plt.xlabel("Horizontal Position (x)")
-                    plt.ylabel("Vertical Position (y)")
+                    figure.scatter(x_list[-1],y_list[-1],marker='x', color='r')
+                    figure.plot([10,10],[0,25],'r')
+                    figure.plot([-10,-10],[0,25],'r')
+                    figure.title(exp_title + "\n Sailboat Path for each Trained Agent's Output Policy")
+                    figure.xlabel("Horizontal Position (x)")
+                    figure.ylabel("Vertical Position (y)")
                 
                 #save_path = os.path.join(path, folder, 'trace_plot.png')
 
                 # plt.savefig(save_path)
-                # plt.show()
-                # plt.close()
-            plot_list.append(plt)
+                figure.show()
+                figure.close()
+
+            plot_list['plot'+str(n)] = figure
 
         return plot_list
 
