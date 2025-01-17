@@ -47,7 +47,7 @@ class Analysis:
                 # Re-applies actions made by agent to observe path
                 exp_title = folder
                 
-                figure.scatter(0,0,marker='x', color='b')
+                ax.scatter(0,0,marker='x', color='b')
                 training_policies = policy_list
                 for action_list in training_policies:
                     x = 0
