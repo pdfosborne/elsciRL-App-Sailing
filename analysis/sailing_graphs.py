@@ -80,7 +80,7 @@ class Analysis:
                     ax.scatter(x_list[-1],y_list[-1],marker='x', color='r')
                     ax.plot([10,10],[0,25],'r')
                     ax.plot([-10,-10],[0,25],'r')
-                    ax.title(exp_title + "\n Sailboat Path for each Trained Agent's Output Policy")
+                    ax.suptitle(exp_title + "\n Sailboat Path for each Trained Agent's Output Policy")
                     ax.xlabel("Horizontal Position (x)")
                     ax.ylabel("Vertical Position (y)")
                 
