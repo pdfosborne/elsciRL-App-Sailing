@@ -17,7 +17,7 @@ class Analysis:
     def __init__(self, save_dir):
         self.save_dir = save_dir
         
-    def trace_plot(self, experiments_names:list=['']):
+    def trace_plot(self):
         """Define experiment directories to run and override names for
         improved plot titles."""
         path = self.save_dir 
@@ -43,10 +43,7 @@ class Analysis:
                             count_check += 1
                 #print(count_check)
                 # Re-applies actions made by agent to observe path
-                if experiments_names[n]!='':
-                    exp_title = experiments_names[n]
-                else:
-                    exp_title = folder
+                exp_title = folder
                 
                 plt.scatter(0,0,marker='x', color='b')
                 training_policies = policy_list
@@ -84,11 +81,13 @@ class Analysis:
                     plt.title(exp_title + "\n Sailboat Path for each Trained Agent's Output Policy")
                     plt.xlabel("Horizontal Position (x)")
                     plt.ylabel("Vertical Position (y)")
+                
+                #save_path = os.path.join(path, folder, 'trace_plot.png')
 
-                save_path = os.path.join(path, folder, 'trace_plot.png')
+                # plt.savefig(save_path)
+                # plt.show()
+                # plt.close()
 
-                plt.savefig(save_path)
-                plt.show()
-                plt.close()            
-                #plt.show()
+        return plt
 
+                
