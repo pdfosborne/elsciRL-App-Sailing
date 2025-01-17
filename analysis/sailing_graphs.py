@@ -25,6 +25,7 @@ class Analysis:
         plot_list = {}
         for n,folder in enumerate(path_folders):
             figure = plt.figure()
+            ax = figure.add_subplot(1, 1, 1)
             if os.path.isdir(path+'/'+folder):
                 exp_path = path + '/' + folder
                 exp_path_folders = os.listdir(exp_path)
@@ -68,26 +69,26 @@ class Analysis:
                         y_list.append(y)
 
                     if np.abs(x_list[-1])>=10:
-                        figure.plot(x_list,y_list,'r',alpha=0.75)
+                        ax.plot(x_list,y_list,'r',alpha=0.75)
                     elif np.abs(y_list[-1])>=24:
-                        figure.plot(x_list,y_list,'g',alpha=0.75)
+                        ax.plot(x_list,y_list,'g',alpha=0.75)
                     elif np.abs(y_list[-1])<0:
-                        figure.plot(x_list,y_list,'r',alpha=0.75)
+                        ax.plot(x_list,y_list,'r',alpha=0.75)
                     else:
-                        figure.plot(x_list,y_list,'k',alpha=0.75)
+                        ax.plot(x_list,y_list,'k',alpha=0.75)
                         
-                    figure.scatter(x_list[-1],y_list[-1],marker='x', color='r')
-                    figure.plot([10,10],[0,25],'r')
-                    figure.plot([-10,-10],[0,25],'r')
-                    figure.title(exp_title + "\n Sailboat Path for each Trained Agent's Output Policy")
-                    figure.xlabel("Horizontal Position (x)")
-                    figure.ylabel("Vertical Position (y)")
+                    ax.scatter(x_list[-1],y_list[-1],marker='x', color='r')
+                    ax.plot([10,10],[0,25],'r')
+                    ax.plot([-10,-10],[0,25],'r')
+                    ax.title(exp_title + "\n Sailboat Path for each Trained Agent's Output Policy")
+                    ax.xlabel("Horizontal Position (x)")
+                    ax.ylabel("Vertical Position (y)")
                 
                 #save_path = os.path.join(path, folder, 'trace_plot.png')
 
                 # plt.savefig(save_path)
-                figure.show()
-                figure.close()
+                plt.show()
+                plt.close()
 
             plot_list['plot'+str(n)] = figure
 
