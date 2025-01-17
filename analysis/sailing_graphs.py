@@ -34,7 +34,7 @@ class Analysis:
                 policy_list = []
                 for result_folders in exp_path_folders:
                     if os.path.isdir(exp_path+'/'+result_folders):
-                        if 'testing' in result_folders:
+                        if 'training' in result_folders:
                             testing_results_path = exp_path + '/' + result_folders
                             path_csv=glob.glob(testing_results_path+"/*.csv")
                             results = pd.read_csv(path_csv[0])
