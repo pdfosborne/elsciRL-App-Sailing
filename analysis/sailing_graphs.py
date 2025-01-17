@@ -89,7 +89,7 @@ class Analysis:
                 # plt.show()
                 # plt.close()
             plot_list.append(plt)
-            plt.clf()
+            plt.close()
         return plot_list
 
                 
