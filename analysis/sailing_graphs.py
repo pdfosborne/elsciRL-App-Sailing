@@ -22,6 +22,7 @@ class Analysis:
         improved plot titles."""
         path = self.save_dir 
         path_folders = os.listdir(path)
+        plot_list = []
         for n,folder in enumerate(path_folders):
             if os.path.isdir(path+'/'+folder):
                 if (folder=='Supervised_Instr_Experiment')|(folder=='Standard_Experiment'):
@@ -87,7 +88,8 @@ class Analysis:
                 # plt.savefig(save_path)
                 # plt.show()
                 # plt.close()
-
-        return plt
+            plot_list.append(plt)
+            plt.clf()
+        return plot_list
 
                 
