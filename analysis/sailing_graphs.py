@@ -45,7 +45,7 @@ class Analysis:
                             count_check += 1
                 #print(count_check)
                 # Re-applies actions made by agent to observe path
-                exp_title = folder
+                exp_title = path.split('/')[-1] + "\n" + folder
                 
                 ax.scatter(0,0,marker='x', color='b')
                 training_policies = policy_list
