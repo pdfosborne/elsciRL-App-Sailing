@@ -46,7 +46,7 @@ class Analysis:
                 #print(count_check)
                 # Re-applies actions made by agent to observe path
                 if 'instr' in folder.lower():
-                    exp_title = path.split('/')[-1] + " - " + folder
+                    exp_title = path.split('/')[-1]
                 else:
                     exp_title = folder
                 
