@@ -39,8 +39,7 @@ class Analysis:
                     if os.path.isdir(exp_path+'/'+result_folders):
                         if 'training' in result_folders:
                             testing_results_path = exp_path + '/' + result_folders
-                            path_csv=glob.glob(testing_results_path+"/*.csv")
-                            results = pd.read_csv(path_csv[0])
+                            results = pd.read_csv(testing_results_path+"/results.csv")
                             agent = results['agent'].iloc[0].split('_')[0]+'_'+results['agent'].iloc[0].split('_')[1]
                             # Update output dict with policy list
                             if (agent != previous_agent) and (previous_agent != ''):
@@ -55,8 +54,9 @@ class Analysis:
                             previous_agent = agent
                 # Add final policy list to output dict
                 policy_output_dict[previous_agent] = policy_list
+                print(policy_output_dict)
+                # Plotting
                 for agent in policy_output_dict.keys():
-                    policy_list = policy_output_dict[agent]
                     #print(count_check)
                     # Re-applies actions made by agent to observe path
                     if 'instr' in folder.lower():
@@ -65,7 +65,7 @@ class Analysis:
                         exp_title = folder + ' - ' + agent
                     
                     ax.scatter(0,0,marker='x', color='b')
-                    training_policies = policy_list
+                    training_policies = policy_output_dict[agent]
                     for action_list in training_policies:
                         x = 0
                         y = 0
