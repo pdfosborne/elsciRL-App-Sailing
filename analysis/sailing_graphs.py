@@ -41,7 +41,7 @@ class Analysis:
                             results = pd.read_csv(path_csv[0])
                             agent = results['agent'].iloc[0].split('__')[0]
                             # Update output dict with policy list
-                            if agent != previous_agent:
+                            if (agent != previous_agent) and (previous_agent != ''):
                                 policy_output_dict[previous_agent] = policy_list
                                 policy_list = []
                                 
