@@ -101,7 +101,7 @@ class Engine:
             reward = -1
             terminated = True
         elif np.abs(self.angle)>self.angle_limit:
-            print("\n \t - Angle limit reached")
+            #print("\n \t - Angle limit reached")
             reward = -1
             terminated = True
         else:
@@ -130,7 +130,7 @@ class Engine:
         x = float(state.split('_')[0])
         y = 5 # Not output by environment so using dummy value for display
         angle = float(state.split('_')[1])
-        print("PLOT DATA = ", x, y, angle)
+        #print("PLOT DATA = ", x, y, angle)
         # Angle is bearing into wind -pi/2 < angle < pi/2
         if angle < np.pi/2:
             U = np.sin(angle)
