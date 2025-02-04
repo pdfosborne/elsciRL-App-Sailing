@@ -58,7 +58,12 @@ class Analysis:
                             count_check += 1
                             previous_agent = agent
                 # Add final policy list to output dict
-                policy_output_dict[previous_agent] = policy_list
+                if previous_agent not in policy_output_dict.keys():
+                    policy_output_dict[previous_agent] = policy_list
+                else:
+                    prior_policy_list = policy_output_dict[previous_agent]
+                    prior_policy_list.append(policy_list[0])
+                    policy_output_dict[previous_agent] = prior_policy_list
                 print(policy_output_dict)
                 # Plotting
                 for agent in policy_output_dict.keys():
