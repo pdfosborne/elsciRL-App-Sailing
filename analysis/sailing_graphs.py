@@ -35,15 +35,17 @@ class Analysis:
                 policy_list = []
                 for result_folders in exp_path_folders:
                     if os.path.isdir(exp_path+'/'+result_folders):
+                        agent = result_folders.split('__')[0]
                         if 'training' in result_folders:
-                            testing_results_path = exp_path + '/' + result_folders
-                            results = pd.read_csv(testing_results_path+"/results.csv")
-                            agent = results['agent'].iloc[0].split('_')[0]+'_'+results['agent'].iloc[0].split('_')[1]
                             # Update output dict with policy list
                             if (agent != previous_agent) and (previous_agent != ''):
+                                print("Agent: ", previous_agent)
+                                print("Policy List: ", policy_list)
                                 policy_output_dict[previous_agent] = policy_list
                                 policy_list = []
-                                
+                            testing_results_path = exp_path + '/' + result_folders
+                            results = pd.read_csv(testing_results_path+"/results.csv")
+                            
                             policy = results['action_history'].mode()[0]
                             policy_fix = policy.split(',')
                             policy_fix = [int(i.replace('[1','1').replace('[0','0').replace('1]','1').replace('0]','0')) for i in policy_fix]
