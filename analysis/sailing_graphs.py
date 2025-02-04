@@ -41,7 +41,7 @@ class Analysis:
                             testing_results_path = exp_path + '/' + result_folders
                             path_csv=glob.glob(testing_results_path+"/*.csv")
                             results = pd.read_csv(path_csv[0])
-                            agent = results['agent'].iloc[0].split('__')[0]
+                            agent = results['agent'].iloc[0].split('_')[0]+'_'+results['agent'].iloc[0].split('_')[1]
                             # Update output dict with policy list
                             if (agent != previous_agent) and (previous_agent != ''):
                                 policy_output_dict[previous_agent] = policy_list
