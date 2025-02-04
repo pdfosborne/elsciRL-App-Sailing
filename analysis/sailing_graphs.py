@@ -107,7 +107,7 @@ class Analysis:
                     plt.show()
                     plt.close()
 
-                plot_list['plot'+str(n)] = figure
+                    plot_list['plot'+str(n)+str(agent)] = figure
 
         return plot_list
 
