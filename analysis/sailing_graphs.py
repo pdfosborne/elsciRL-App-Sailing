@@ -20,6 +20,7 @@ class Analysis:
     def trace_plot(self):
         """Define experiment directories to run and override names for
         improved plot titles."""
+        # TODO MOVE ALL THIS FOLDER SEARCHING INTO ELSCIRL
         path = self.save_dir 
         path_folders = os.listdir(path)
         plot_list = {}
@@ -33,6 +34,7 @@ class Analysis:
                 count_check = 0
                 previous_agent = ''
                 policy_output_dict = {}
+                policy_list = []
                 for result_folders in exp_path_folders:
                     if os.path.isdir(exp_path+'/'+result_folders):
                         if 'training' in result_folders:
