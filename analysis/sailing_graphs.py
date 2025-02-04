@@ -25,8 +25,6 @@ class Analysis:
         path_folders = os.listdir(path)
         plot_list = {}
         for n,folder in enumerate(path_folders):
-            figure = plt.figure()
-            ax = figure.add_subplot(1, 1, 1)
             if os.path.isdir(path+'/'+folder):
                 exp_path = path + '/' + folder
                 exp_path_folders = os.listdir(exp_path)
@@ -57,6 +55,8 @@ class Analysis:
                 print(policy_output_dict)
                 # Plotting
                 for agent in policy_output_dict.keys():
+                    figure = plt.figure()
+                    ax = figure.add_subplot(1, 1, 1)
                     #print(count_check)
                     # Re-applies actions made by agent to observe path
                     if 'instr' in folder.lower():
