@@ -41,7 +41,12 @@ class Analysis:
                             if (agent != previous_agent) and (previous_agent != ''):
                                 print("Agent: ", previous_agent)
                                 print("Policy List: ", policy_list)
-                                policy_output_dict[previous_agent] = policy_list
+                                if previous_agent not in policy_output_dict.keys():
+                                    policy_output_dict[previous_agent] = policy_list
+                                else:
+                                    prior_policy_list = policy_output_dict[previous_agent]
+                                    prior_policy_list.append(policy_list)
+                                    policy_output_dict[previous_agent] = prior_policy_list
                                 policy_list = []
                             testing_results_path = exp_path + '/' + result_folders
                             results = pd.read_csv(testing_results_path+"/results.csv")
