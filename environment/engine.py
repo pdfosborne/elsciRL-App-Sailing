@@ -30,12 +30,14 @@ class Engine:
             'author': 'Author',
             'year': 'Year',
             'render_data':{'render_mode':'rgb_array', 
-                            'render_fps':4}
+                           'render_fps':4}
         }
         ledger_gym_compatibility = {
             # Limited to discrete actions for now, set to arbitrary large number if uncertain
-            'action_space_size':4, 
+            'action_space_size':2, 
         }
+        # TODO Move this into elsciRL
+        self.ledger = ledger_required | ledger_optional | ledger_gym_compatibility
         # --------------------------
         #self.Environment = "Engine Initialization"
         self.x_limit = 10
