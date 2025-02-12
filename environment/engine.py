@@ -46,6 +46,10 @@ class Engine:
         self.supervised_rewards = local_setup_info['supervised_rewards']
         # Precision parameter
         self.obs_precision = local_setup_info['obs_precision']
+        # Initialize history
+        self.action_history = []
+        self.obs_history = []
+
     # --------------------------
     # Defined functions used by engine source
     @staticmethod
@@ -73,6 +77,7 @@ class Engine:
     
     def step(self, state:any, action:any):
         """Enact an action."""
+        self.action_history.append(action)
         a = [-0.1, 0.1][action]
         # Observation space
         self.x += np.round((Engine.vel(self.angle + a) * np.sin(self.angle + a)),self.obs_precision) # Round x to Ndp
@@ -80,7 +85,7 @@ class Engine:
         self.angle = np.round(self.angle+a,1) 
         #obs = str(self.x)+'_'+str(self.angle)
         obs = "{n:.{d}f}".format(n=self.x, d=self.obs_precision)+'_'+"{:0.1f}".format(self.angle) # fix - https://docs.python.org/3.4/library/string.html#format-specification-mini-language
-
+        self.obs_history.append(obs)
         # Reward signal
         # - Added flag for whether we give agent immediate positive reward
         # - Update: Added scale factor if using supervised rewards to not override goal rewards
