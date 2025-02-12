@@ -4,6 +4,7 @@ import torch
 from torch import Tensor
 # StateAdapter includes static methods for adapters
 from elsciRL.encoders.sentence_transformer_MiniLM_L6v2 import LanguageEncoder
+from gymnasium.spaces import Box
 
 class LanguageAdapter:
     _cached_state_idx: Dict[str, int] = dict()
@@ -11,6 +12,9 @@ class LanguageAdapter:
     def __init__(self, setup_info:dict={}) -> None:
         # Language encoder doesn't require any preset knowledge of env to use
         self.encoder = LanguageEncoder()
+        # Observartion is string: "x_angle"
+        # -> encoder output is 1x384 tensor from miniLM
+        self.observation_space = Box(low=-1, high=1, shape=(1,384), dtype=np.float32)
     
     def adapter(self, state:any, legal_moves:list = None, episode_action_history:list = None, encode:bool = True, indexed: bool = False) -> Tensor:
         """ Use Language name for every piece name for current boat position """

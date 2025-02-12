@@ -5,6 +5,7 @@ import torch
 from torch import Tensor
 # StateAdapter includes static methods for adapters
 from elsciRL.encoders.poss_state_encoded import StateEncoder
+from gymnasium.spaces import Discrete
 
 class DefaultAdapter:
     # ------ Static Methods ---------------------------------------
@@ -44,6 +45,10 @@ class DefaultAdapter:
         # Input to pre-built possible state encoder
         #self.encoder = StateEncoder(all_possible_states)
         self.encoder = {}
+        # Observartion is string: "x_angle"
+        # -> Then discretized and returned as string: "x_state_angle_state"
+        # -> Before being numeritized to a unique id (x:-10-10*2dp * angle:0-2pi*1dp)
+        self.observation_space = Discrete(2000*30)
     
     
     def adapter(self, state:any, legal_moves:list = None, episode_action_history:list = None, encode:bool = True, indexed: bool = False) -> Tensor:
