@@ -1,5 +1,6 @@
 from typing import Dict, List
 import pandas as pd
+import numpy as np
 import torch
 from torch import Tensor
 # StateAdapter includes static methods for adapters
