@@ -77,7 +77,11 @@ class Engine:
     
     def step(self, state:any, action:any):
         """Enact an action."""
-        self.action_history.append(action)
+        # Added to ensure format is correct
+        if isinstance(action, np.int64):
+            self.action_history.append(action.item())
+        else:
+            self.action_history.append(action)
         a = [-0.1, 0.1][action]
         # Observation space
         self.x += np.round((Engine.vel(self.angle + a) * np.sin(self.angle + a)),self.obs_precision) # Round x to Ndp
