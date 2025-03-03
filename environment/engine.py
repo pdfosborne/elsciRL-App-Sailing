@@ -16,7 +16,7 @@ class Engine:
         # Ledger of the environment with meta information for the problem
         ledger_required = {
             'id': 'Unique Problem ID',
-            'type': 'Language/Numeric',
+            'type': 'Numeric & Language',
             'description': 'Problem Description',
             'goal': 'Goal Description'
             }
@@ -78,7 +78,10 @@ class Engine:
     def step(self, state:any, action:any):
         """Enact an action."""
         # Added to ensure format is correct
+        # TODO: move this into elsciRL agents
         if isinstance(action, np.int64):
+            self.action_history.append(action.item())
+        elif isinstance(action, np.ndarray):
             self.action_history.append(action.item())
         else:
             self.action_history.append(action)
@@ -137,7 +140,10 @@ class Engine:
                 - y: The vertical position of the sailboat.
                 - angle: The angle of the sailboat.
             Returns:
-                render: The rendered environment."""            
+                render: The rendered environment."""   
+        if state is None:
+            state = self.state
+
         x = float(state.split('_')[0])
         y = 5 # Not output by environment so using dummy value for display
         angle = float(state.split('_')[1])
