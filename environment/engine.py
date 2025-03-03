@@ -143,10 +143,12 @@ class Engine:
             Returns:
                 render: The rendered environment."""   
         if state is None:
-            state = self.obs_history[-1]
-
-        x = float(state.split('_')[0])
-        y = 5 # Not output by environment so using dummy value for display
+            x = self.x
+            y = self.y
+        else:
+            x = float(state.split('_')[0])
+            y = 5 # Not output by environment so using dummy value for display
+        
         angle = float(state.split('_')[1])
         #print("PLOT DATA = ", x, y, angle)
         # Angle is bearing into wind -pi/2 < angle < pi/2
@@ -163,8 +165,10 @@ class Engine:
             U = np.sin(angle)
             V = -np.cos(angle)
 
-        DPI = 128
-        fig, ax = plt.subplots(figsize=(5,5), dpi = DPI)
+        # Default Figure Size and DPI
+        fig, ax = plt.subplots()
+        # DPI = 128
+        # fig, ax = plt.subplots(figsize=(5,5), dpi = DPI)
         ax.scatter(x,y,c='b',marker='x',alpha=1)
         ax.quiver(x,y,U,V,angles='uv',scale_units='xy')
         if y > 1:

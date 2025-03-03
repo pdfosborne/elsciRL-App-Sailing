@@ -64,7 +64,6 @@ class Analysis:
                     prior_policy_list = policy_output_dict[previous_agent]
                     prior_policy_list.append(policy_list[0])
                     policy_output_dict[previous_agent] = prior_policy_list
-                print(policy_output_dict)
                 # Plotting
                 for agent in policy_output_dict.keys():
                     figure = plt.figure()
