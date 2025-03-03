@@ -142,7 +142,7 @@ class Engine:
             Returns:
                 render: The rendered environment."""   
         if state is None:
-            state = self.state
+            state = self.obs_history[-1]
 
         x = float(state.split('_')[0])
         y = 5 # Not output by environment so using dummy value for display
