@@ -72,6 +72,7 @@ class Engine:
             self.angle = 0  # always start with angle 0
         self.y = 0
         obs = "{n:.{d}f}".format(n=self.x, d=self.obs_precision)+'_'+"{:0.1f}".format(self.angle)
+        self.obs_history.append(obs)
         return obs
 
     
