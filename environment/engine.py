@@ -165,10 +165,9 @@ class Engine:
             U = np.sin(angle)
             V = -np.cos(angle)
 
-        # Default Figure Size and DPI
-        fig, ax = plt.subplots()
-        # DPI = 128
-        # fig, ax = plt.subplots(figsize=(5,5), dpi = DPI)
+        # Figure Size and DPI
+        DPI = 128
+        fig, ax = plt.subplots(figsize=(5,5), dpi = DPI)
         ax.scatter(x,y,c='b',marker='x',alpha=1)
         ax.quiver(x,y,U,V,angles='uv',scale_units='xy')
         if y > 1:
