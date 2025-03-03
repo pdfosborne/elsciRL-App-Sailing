@@ -145,11 +145,11 @@ class Engine:
         if state is None:
             x = self.x
             y = self.y
+            angle = self.angle
         else:
             x = float(state.split('_')[0])
             y = 5 # Not output by environment so using dummy value for display
-        
-        angle = float(state.split('_')[1])
+            angle = float(state.split('_')[1])
         #print("PLOT DATA = ", x, y, angle)
         # Angle is bearing into wind -pi/2 < angle < pi/2
         if angle < np.pi/2:
