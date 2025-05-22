@@ -7,7 +7,7 @@ from torch import Tensor
 from elsciRL.encoders.poss_state_encoded import StateEncoder
 from gymnasium.spaces import Discrete
 
-class DefaultAdapter:
+class Adapter:
     # ------ Static Methods ---------------------------------------
     # - Defined by simulator source https://github.com/PPierzc/ai-learns-to-sail/blob/master/tasks/channel.py
     @staticmethod

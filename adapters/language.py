@@ -7,7 +7,7 @@ from torch import Tensor
 from elsciRL.encoders.sentence_transformer_MiniLM_L6v2 import LanguageEncoder
 from gymnasium.spaces import Box
 
-class LanguageAdapter:
+class Adapter:
     _cached_state_idx: Dict[str, int] = dict()
 
     def __init__(self, setup_info:dict={}) -> None:
