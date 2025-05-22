@@ -21,10 +21,10 @@ class Adapter:
     @staticmethod
     def state_discretizer(state):
         x = float(state.split('_')[0])
-        x_state = DefaultAdapter.x_to_state(x)
+        x_state = Adapter.x_to_state(x)
 
         angle = float(state.split('_')[1])
-        angle_state = DefaultAdapter.angle_to_state(angle)
+        angle_state = Adapter.angle_to_state(angle)
 
         state_out = str(x_state)+'_'+str(angle_state)
         return state_out
@@ -54,7 +54,7 @@ class Adapter:
     def adapter(self, state:any, legal_moves:list = None, episode_action_history:list = None, encode:bool = True, indexed: bool = False) -> Tensor:
         """ Default adapter to define the state space for the agent in the correct elsciRL format."""
         
-        state = DefaultAdapter.state_discretizer(state)
+        state = Adapter.state_discretizer(state)
 
         # Encode to Tensor for agents
         if encode:
@@ -72,9 +72,9 @@ class Adapter:
         if (indexed):
             state_indexed = list()
             for sent in state:
-                if (sent not in DefaultAdapter._cached_state_idx):
-                    DefaultAdapter._cached_state_idx[sent] = len(DefaultAdapter._cached_state_idx)
-                state_indexed.append(DefaultAdapter._cached_state_idx[sent])
+                if (sent not in Adapter._cached_state_idx):
+                    Adapter._cached_state_idx[sent] = len(Adapter._cached_state_idx)
+                state_indexed.append(Adapter._cached_state_idx[sent])
 
             state_encoded = torch.tensor(state_indexed)
 

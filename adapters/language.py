@@ -13,7 +13,7 @@ class Adapter:
     def __init__(self, setup_info:dict={}) -> None:
         # Language encoder doesn't require any preset knowledge of env to use
         self.encoder = LanguageEncoder()
-        # Observartion is string: "x_angle"
+        # Observation is string: "x_angle"
         # -> encoder output is 1x384 tensor from miniLM
         self.observation_space = Box(low=-1, high=1, shape=(1,384), dtype=np.float32)
     
@@ -110,9 +110,9 @@ class Adapter:
         if (indexed):
             state_indexed = list()
             for sent in state:
-                if (sent not in LanguageAdapter._cached_state_idx):
-                    LanguageAdapter._cached_state_idx[sent] = len(LanguageAdapter._cached_state_idx)
-                state_indexed.append(LanguageAdapter._cached_state_idx[sent])
+                if (sent not in Adapter._cached_state_idx):
+                    Adapter._cached_state_idx[sent] = len(Adapter._cached_state_idx)
+                state_indexed.append(Adapter._cached_state_idx[sent])
 
             state_encoded = torch.tensor(state_indexed)
 
