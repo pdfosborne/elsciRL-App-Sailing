@@ -18,7 +18,7 @@ class Adapter:
         self.observation_space = Box(low=-1, high=1, shape=(1,384), dtype=np.float32)
     
     def adapter(self, state:any, legal_moves:list = None, episode_action_history:list = None, encode:bool = True, indexed: bool = False) -> Tensor:
-        """ Use Language name for every piece name for current boat position """
+        """ Use Language description for every position in the river."""
 
         # state = 'x_angle'
         # legal_moves = [0,1]
