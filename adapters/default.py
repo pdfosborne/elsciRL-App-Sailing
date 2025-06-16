@@ -68,7 +68,7 @@ class Adapter:
             # - Wont work for neural agents
             if state not in self.encoder:
                 # Encode the state as a one-hot vector
-                state_encoded = torch.tensor([len(self.encoder)], dtype=torch.float32)
+                state_encoded = torch.tensor([len(self.encoder)])
                 self.encoder[state] = state_encoded
             else:
                 state_encoded = self.encoder[state]
