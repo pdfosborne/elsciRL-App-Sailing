@@ -47,18 +47,16 @@ class Adapter:
         #         all_possible_states.append(index)
         # Input to pre-built possible state encoder
         # Initialize the encoder with one-hot encoding for each state
-        #self.encoder = StateEncoder(all_possible_states)
+        
         num_x_states = 10*2 # -10 to 10 
         num_angle_states = 30 
         self.num_states = num_x_states*(10**setup_info['obs_precision']) * num_angle_states  # 2000 x states and 30 angle states
-        self.encoder = {}
-        self.encoder_idx = 0
+        self.encoder = StateEncoder(self.num_states)
         # -------------------------------------------------------------
         # Observartion is string: "x_angle"
         # -> Then discretized and returned as string: "x_state_angle_state"
         # -> Before being numeritized to a unique id (x:-10-10*2dp * angle:0-2pi*1dp)
         self.observation_space = Discrete(2000*30)
-        self.input_dim = self.num_states # - 1 for the state index
     
     
     def adapter(self, state:any, legal_moves:list = None, episode_action_history:list = None, encode:bool = True, indexed: bool = False) -> Tensor:
@@ -70,16 +68,7 @@ class Adapter:
             #state_encoded = self.encoder.encode(state=state)
             # elsciRL state encoder is large and not needed for tabular agents
             # - Wont work for neural agents
-            if state not in self.encoder:
-                # Encode the state as a one-hot vector
-                state_encoded = torch.nn.functional.one_hot(torch.tensor(self.encoder_idx), num_classes=self.num_states).float()
-                # Store the encoded state in the encoder dictionary
-                self.encoder[state] = state_encoded
-                # Increment the encoder index for the next unique state
-                Adapter._cached_state_idx[state] = self.encoder_idx
-                self.encoder_idx += 1
-            else:
-                state_encoded = self.encoder[state]
+            state_encoded = self.encoder.encode(state=state)
         else:
             state_encoded = state
 
