@@ -75,6 +75,8 @@ class Adapter:
                 # Increment the encoder index for the next unique state
                 Adapter._cached_state_idx[state] = self.encoder_idx
                 self.encoder_idx += 1
+                print("--- New state encoded ---")
+                print(self.encoder_idx, " - ", state, " - ", state_encoded)
             else:
                 state_encoded = self.encoder[state]
         else:
