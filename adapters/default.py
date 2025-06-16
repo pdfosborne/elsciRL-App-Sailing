@@ -43,8 +43,12 @@ class Adapter:
                 index = str(x_ind)+'_'+str(angle_ind)
                 all_possible_states.append(index)
         # Input to pre-built possible state encoder
-        #self.encoder = StateEncoder(all_possible_states)
+        # Initialize the encoder with one-hot encoding for each state
         self.encoder = {}
+        for idx, state in enumerate(all_possible_states):
+            one_hot = torch.zeros(len(all_possible_states), dtype=torch.float32)
+            one_hot[idx] = 1.0
+            self.encoder[state] = one_hot
         # Observartion is string: "x_angle"
         # -> Then discretized and returned as string: "x_state_angle_state"
         # -> Before being numeritized to a unique id (x:-10-10*2dp * angle:0-2pi*1dp)
@@ -62,11 +66,7 @@ class Adapter:
             #state_encoded = self.encoder.encode(state=state)
             # elsciRL state encoder is large and not needed for tabular agents
             # - Wont work for neural agents
-            if (state not in self.encoder):
-                state_encoded = torch.tensor([len(self.encoder)], dtype=torch.float32)
-                self.encoder[state] = state_encoded
-            else:
-                state_encoded = self.encoder[state]
+            state_encoded = self.encoder[state]
         else:
             state_encoded = state
 
