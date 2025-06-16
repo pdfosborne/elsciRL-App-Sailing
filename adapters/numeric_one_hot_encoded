@@ -1,0 +1,23 @@
+from torch import Tensor
+# StateAdapter includes static methods for adapters
+from elsciRL.encoders.poss_state_encoded import StateEncoder
+
+class Adapter:
+    def __init__(self, setup_info:dict={}) -> None:
+        num_x_states = 10*2 # -10 to 10 
+        num_angle_states = 30 
+        self.num_states = num_x_states*(10**setup_info['obs_precision']) * num_angle_states  # 2000 x states and 30 angle states
+        # elsciRL state encoder is large and not needed for tabular agents
+        self.one_hot_encoder = StateEncoder(self.num_states)
+        
+    
+    def adapter(self, state:any, legal_moves:list = None, episode_action_history:list = None, encode:bool = True, indexed: bool = False) -> Tensor:
+        """ Default adapter to define the state space for the agent in the correct elsciRL format."""
+        # Encode to Tensor for agents using one-hot encoding
+        if encode:
+            state_encoded = self.one_hot_encoder.encode(state=state, legal_actions=legal_moves, episode_action_history=episode_action_history, indexed=indexed)   
+        else:
+            state_encoded = state
+
+        
+        return state_encoded
