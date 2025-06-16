@@ -34,7 +34,7 @@ class Adapter:
     def __init__(self, setup_info:dict={}) -> None:
         # ------ State Encoder ---------------------------------------
         # Initialise encoder based on all possible env states
-        all_possible_x = [i*-1 for i in range(40)]
+        all_possible_x = [i*-1 for i in range(2000)]
         all_possible_angle = [i for i in range(30)]
         # Need an index that preserves the identity of both the x and angle values
         all_possible_states = []
@@ -52,7 +52,7 @@ class Adapter:
         # Observartion is string: "x_angle"
         # -> Then discretized and returned as string: "x_state_angle_state"
         # -> Before being numeritized to a unique id (x:-10-10*2dp * angle:0-2pi*1dp)
-        self.observation_space = Discrete(40*30)
+        self.observation_space = Discrete(2000*30)
         self.input_dim = len(all_possible_states)  # Required for DQN input size
     
     
