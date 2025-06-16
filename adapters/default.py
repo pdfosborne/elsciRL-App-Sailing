@@ -49,6 +49,7 @@ class Adapter:
         # Initialize the encoder with one-hot encoding for each state
         #self.encoder = StateEncoder(all_possible_states)
         self.encoder = {}
+        self.encoder_idx = 0
         # -------------------------------------------------------------
         # Observartion is string: "x_angle"
         # -> Then discretized and returned as string: "x_state_angle_state"
@@ -68,8 +69,12 @@ class Adapter:
             # - Wont work for neural agents
             if state not in self.encoder:
                 # Encode the state as a one-hot vector
-                state_encoded = torch.tensor([len(self.encoder)])
+                state_encoded = torch.tensor([self.encoder_idx])
+                # Store the encoded state in the encoder dictionary
                 self.encoder[state] = state_encoded
+                # Increment the encoder index for the next unique state
+                Adapter._cached_state_idx[state] = self.encoder_idx
+                self.encoder_idx += 1
             else:
                 state_encoded = self.encoder[state]
         else:
