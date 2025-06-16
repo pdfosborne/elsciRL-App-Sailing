@@ -51,12 +51,20 @@ class Adapter:
         num_x_states = 10*2 # -10 to 10 
         num_angle_states = 30 
         self.num_states = num_x_states*(10**setup_info['obs_precision']) * num_angle_states  # 2000 x states and 30 angle states
-        self.encoder = StateEncoder(self.num_states)
+        
         # -------------------------------------------------------------
         # Observartion is string: "x_angle"
         # -> Then discretized and returned as string: "x_state_angle_state"
         # -> Before being numeritized to a unique id (x:-10-10*2dp * angle:0-2pi*1dp)
         self.observation_space = Discrete(2000*30)
+
+        # elsciRL state encoder is large and not needed for tabular agents
+        self.one_hot_encoder = StateEncoder(self.num_states)
+        # Create a mapping from state string to unique id
+        self.index_encoder: Dict[str, int] = {}
+        self.encoder_idx: int = 0
+        self.input_dim = 1
+        
     
     
     def adapter(self, state:any, legal_moves:list = None, episode_action_history:list = None, encode:bool = True, indexed: bool = False) -> Tensor:
@@ -65,20 +73,23 @@ class Adapter:
 
         # Encode to Tensor for agents
         if encode:
-            #state_encoded = self.encoder.encode(state=state)
-            # elsciRL state encoder is large and not needed for tabular agents
-            # - Wont work for neural agents
-            state_encoded = self.encoder.encode(state=state)
+            # if indexed use the elsciRL state encoder, othrewise single index based encoding
+            if (indexed):
+                # elsciRL state encoder is large and not needed for tabular agents
+                # - Causes issure for training neural agents however
+                state_encoded = self.one_hot_encoder.encode(state=state, legal_actions=legal_moves, episode_action_history=episode_action_history, indexed=indexed)
+            else:
+                if state not in self.index_encoder:
+                    # If the state is not in the encoder, add it
+                    state_encoded = torch.tensor([self.encoder_idx]).float()  # Use the index as the state encoded value
+                    # Store the encoded state in the encoder dictionary
+                    self.index_encoder[state] = state_encoded
+                    self.encoder_idx += 1
+                else:
+                    # If the state is already in the encoder, retrieve its index
+                    state_encoded = self.index_encoder[state]
         else:
             state_encoded = state
 
-        if (indexed):
-            state_indexed = list()
-            for sent in state:
-                if (sent not in Adapter._cached_state_idx):
-                    Adapter._cached_state_idx[sent] = len(Adapter._cached_state_idx)
-                state_indexed.append(Adapter._cached_state_idx[sent])
-
-            state_encoded = torch.tensor(state_indexed)
-
+        
         return state_encoded
