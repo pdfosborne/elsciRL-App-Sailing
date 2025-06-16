@@ -34,8 +34,10 @@ class Adapter:
     def __init__(self, setup_info:dict={}) -> None:
         # ------ State Encoder ---------------------------------------
         # Initialise encoder based on all possible env states
-        all_possible_x = [i for i in range(10*(10**setup_info['obs_precision']))]
-        all_possible_x.append(np.negative(np.array(all_possible_x)))
+        # - x: -10 to 10 with N decimal precision
+        all_possible_x = [i*-1 for i in range(10*(10**setup_info['obs_precision']))]
+        for i in range(10*(10**setup_info['obs_precision'])):
+            all_possible_x.append(i)
         all_possible_angle = [i for i in range(30)]
         # Need an index that preserves the identity of both the x and angle values
         all_possible_states = []
