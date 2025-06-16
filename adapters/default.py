@@ -43,7 +43,7 @@ class Adapter:
         all_possible_states = []
         for x_ind in all_possible_x:
             for angle_ind in all_possible_angle:
-                index = str(x_ind)+'_'+str(angle_ind)
+                index = "{n:.{d}f}".format(n=x_ind, d=setup_info['obs_precision'])+'_'+"{:0.1f}".format(angle_ind) 
                 all_possible_states.append(index)
         # Input to pre-built possible state encoder
         # Initialize the encoder with one-hot encoding for each state
