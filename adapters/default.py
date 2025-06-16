@@ -39,6 +39,7 @@ class Adapter:
         for i in range(10*(10**setup_info['obs_precision'])):
             all_possible_x.append(i)
         all_possible_angle = [i for i in range(30)]
+        print("All possible x states: ", all_possible_x[:100])  # Print first 100 for brevity
         # Need an index that preserves the identity of both the x and angle values
         all_possible_states = []
         for x_ind in all_possible_x:
