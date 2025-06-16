@@ -52,6 +52,7 @@ class Adapter:
             one_hot = torch.zeros(len(all_possible_states), dtype=torch.float32)
             one_hot[idx] = 1.0
             self.encoder[state] = one_hot
+        print(self.encoder)
         # Observartion is string: "x_angle"
         # -> Then discretized and returned as string: "x_state_angle_state"
         # -> Before being numeritized to a unique id (x:-10-10*2dp * angle:0-2pi*1dp)
