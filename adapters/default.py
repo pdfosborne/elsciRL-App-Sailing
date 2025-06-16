@@ -48,7 +48,8 @@ class Adapter:
         # Observartion is string: "x_angle"
         # -> Then discretized and returned as string: "x_state_angle_state"
         # -> Before being numeritized to a unique id (x:-10-10*2dp * angle:0-2pi*1dp)
-        self.observation_space = Discrete(2000*30)
+        self.observation_space = Discrete(40*30)
+        self.input_dim = len(all_possible_states)  # Required for DQN input size
     
     
     def adapter(self, state:any, legal_moves:list = None, episode_action_history:list = None, encode:bool = True, indexed: bool = False) -> Tensor:
