@@ -39,7 +39,6 @@ class Adapter:
         for i in range(10*(10**setup_info['obs_precision'])):
             all_possible_x.append(i)
         all_possible_angle = [i for i in range(30)]
-        print("All possible x states: ", all_possible_x[:100])  # Print first 100 for brevity
         # Need an index that preserves the identity of both the x and angle values
         all_possible_states = []
         for x_ind in all_possible_x:
@@ -48,13 +47,11 @@ class Adapter:
                 all_possible_states.append(index)
         # Input to pre-built possible state encoder
         # Initialize the encoder with one-hot encoding for each state
-        print("All possible states: ", all_possible_states[:100])  # Print first 100 for brevity
         self.encoder = {}
         for idx, state in enumerate(all_possible_states):
             one_hot = torch.zeros(len(all_possible_states), dtype=torch.float32)
             one_hot[idx] = 1.0
             self.encoder[state] = one_hot
-        print(self.encoder)
         # Observartion is string: "x_angle"
         # -> Then discretized and returned as string: "x_state_angle_state"
         # -> Before being numeritized to a unique id (x:-10-10*2dp * angle:0-2pi*1dp)
@@ -64,7 +61,6 @@ class Adapter:
     
     def adapter(self, state:any, legal_moves:list = None, episode_action_history:list = None, encode:bool = True, indexed: bool = False) -> Tensor:
         """ Default adapter to define the state space for the agent in the correct elsciRL format."""
-        print(state)
         #state = Adapter.state_discretizer(state)
 
         # Encode to Tensor for agents
@@ -72,7 +68,10 @@ class Adapter:
             #state_encoded = self.encoder.encode(state=state)
             # elsciRL state encoder is large and not needed for tabular agents
             # - Wont work for neural agents
-            state_encoded = self.encoder[state]
+            try:
+                state_encoded = self.encoder[state]
+            except KeyError:
+                print(f"State {state} not found in encoder {self.encoder}.")
         else:
             state_encoded = state
 
