@@ -47,16 +47,11 @@ class Adapter:
                 all_possible_states.append(index)
         # Input to pre-built possible state encoder
         # Initialize the encoder with one-hot encoding for each state
-        self.encoder = {}
-        for idx, state in enumerate(all_possible_states):
-            one_hot = torch.zeros(len(all_possible_states), dtype=torch.float32)
-            one_hot[idx] = 1.0
-            self.encoder[state] = one_hot
+        self.encoder = StateEncoder(all_possible_states)
         # Observartion is string: "x_angle"
         # -> Then discretized and returned as string: "x_state_angle_state"
         # -> Before being numeritized to a unique id (x:-10-10*2dp * angle:0-2pi*1dp)
         self.observation_space = Discrete(2000*30)
-        self.input_dim = len(all_possible_states)  # Required for DQN input size
     
     
     def adapter(self, state:any, legal_moves:list = None, episode_action_history:list = None, encode:bool = True, indexed: bool = False) -> Tensor:
@@ -68,10 +63,7 @@ class Adapter:
             #state_encoded = self.encoder.encode(state=state)
             # elsciRL state encoder is large and not needed for tabular agents
             # - Wont work for neural agents
-            try:
-                state_encoded = self.encoder[state]
-            except KeyError:
-                print(f"State {state} not found in encoder {self.encoder}.")
+            state_encoded = self.encoder[state]
         else:
             state_encoded = state
 
