@@ -69,7 +69,7 @@ class Adapter:
             # - Wont work for neural agents
             if state not in self.encoder:
                 # Encode the state as a one-hot vector
-                state_encoded = torch.tensor([self.encoder_idx])
+                state_encoded = torch.tensor([np.float32(self.encoder_idx)])
                 # Store the encoded state in the encoder dictionary
                 self.encoder[state] = state_encoded
                 # Increment the encoder index for the next unique state
