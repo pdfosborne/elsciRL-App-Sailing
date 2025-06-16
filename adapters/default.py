@@ -63,7 +63,7 @@ class Adapter:
             # elsciRL state encoder is large and not needed for tabular agents
             # - Wont work for neural agents
             if (state not in self.encoder):
-                state_encoded = torch.tensor([len(self.encoder)])
+                state_encoded = torch.tensor([float(len(self.encoder))])
                 self.encoder[state] = state_encoded
             else:
                 state_encoded = self.encoder[state]
