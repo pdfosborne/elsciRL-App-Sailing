@@ -48,6 +48,7 @@ class Adapter:
         # Input to pre-built possible state encoder
         # Initialize the encoder with one-hot encoding for each state
         self.encoder = StateEncoder(all_possible_states)
+        # -------------------------------------------------------------
         # Observartion is string: "x_angle"
         # -> Then discretized and returned as string: "x_state_angle_state"
         # -> Before being numeritized to a unique id (x:-10-10*2dp * angle:0-2pi*1dp)
