@@ -59,7 +59,7 @@ class Adapter:
     def adapter(self, state:any, legal_moves:list = None, episode_action_history:list = None, encode:bool = True, indexed: bool = False) -> Tensor:
         """ Default adapter to define the state space for the agent in the correct elsciRL format."""
         
-        state = Adapter.state_discretizer(state)
+        #state = Adapter.state_discretizer(state)
 
         # Encode to Tensor for agents
         if encode:
