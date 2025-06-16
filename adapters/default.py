@@ -35,24 +35,26 @@ class Adapter:
         # ------ State Encoder ---------------------------------------
         # Initialise encoder based on all possible env states
         # - x: -10 to 10 with N decimal precision
-        all_possible_x = [i*-1 for i in range(10*(10**setup_info['obs_precision']))]
-        for i in range(10*(10**setup_info['obs_precision'])):
-            all_possible_x.append(i)
-        all_possible_angle = [i for i in range(30)]
-        # Need an index that preserves the identity of both the x and angle values
-        all_possible_states = []
-        for x_ind in all_possible_x:
-            for angle_ind in all_possible_angle:
-                index = "{n:.{d}f}".format(n=x_ind, d=setup_info['obs_precision'])+'_'+"{:0.1f}".format(angle_ind) 
-                all_possible_states.append(index)
+        # all_possible_x = [i*-1 for i in range(10*(10**setup_info['obs_precision']))]
+        # for i in range(10*(10**setup_info['obs_precision'])):
+        #     all_possible_x.append(i)
+        # all_possible_angle = [i for i in range(30)]
+        # # Need an index that preserves the identity of both the x and angle values
+        # all_possible_states = []
+        # for x_ind in all_possible_x:
+        #     for angle_ind in all_possible_angle:
+        #         index = "{n:.{d}f}".format(n=x_ind, d=setup_info['obs_precision'])+'_'+"{:0.1f}".format(angle_ind) 
+        #         all_possible_states.append(index)
         # Input to pre-built possible state encoder
         # Initialize the encoder with one-hot encoding for each state
-        self.encoder = StateEncoder(all_possible_states)
+        #self.encoder = StateEncoder(all_possible_states)
+        self.encoder = {}
         # -------------------------------------------------------------
         # Observartion is string: "x_angle"
         # -> Then discretized and returned as string: "x_state_angle_state"
         # -> Before being numeritized to a unique id (x:-10-10*2dp * angle:0-2pi*1dp)
         self.observation_space = Discrete(2000*30)
+        self.input_size = 1 # - 1 for the state index
     
     
     def adapter(self, state:any, legal_moves:list = None, episode_action_history:list = None, encode:bool = True, indexed: bool = False) -> Tensor:
@@ -64,7 +66,12 @@ class Adapter:
             #state_encoded = self.encoder.encode(state=state)
             # elsciRL state encoder is large and not needed for tabular agents
             # - Wont work for neural agents
-            state_encoded = self.encoder[state]
+            if state not in self.encoder:
+                # Encode the state as a one-hot vector
+                state_encoded = torch.zeros(len(self.encoder), dtype=torch.float32)
+                self.encoder[state] = state_encoded
+            else:
+                state_encoded = self.encoder[state]
         else:
             state_encoded = state
 
