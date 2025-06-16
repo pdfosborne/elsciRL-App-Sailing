@@ -47,6 +47,7 @@ class Adapter:
                 all_possible_states.append(index)
         # Input to pre-built possible state encoder
         # Initialize the encoder with one-hot encoding for each state
+        print("All possible states: ", all_possible_states[:100])  # Print first 100 for brevity
         self.encoder = {}
         for idx, state in enumerate(all_possible_states):
             one_hot = torch.zeros(len(all_possible_states), dtype=torch.float32)
