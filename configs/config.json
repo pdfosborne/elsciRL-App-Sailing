@@ -8,7 +8,7 @@
     "number_training_repeats": 20,
     "number_training_seeds": 1,
 
-    "test_agent_type":"all",
+    "test_agent_type":"best",
     "number_test_episodes": 500,
     "number_test_repeats": 10,
 
