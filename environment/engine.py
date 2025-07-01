@@ -32,8 +32,13 @@ class Engine:
             'render_data':{'render_mode':'rgb_array', 
                            'render_fps':4}
         }
-        # TODO Move this into elsciRL
-        self.ledger = ledger_required | ledger_optional
+        ledger_gym_compatibility = {
+            # Limited to discrete actions for now, set to arbitrary large number if uncertain
+            'action_space_size':2, 
+        }
+        # DQN Compatibility need to specify action space size
+        self.output_size = 2
+        self.ledger = ledger_required | ledger_optional | ledger_gym_compatibility
         # --------------------------
         #self.Environment = "Engine Initialization"
         self.x_limit = 10
