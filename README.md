@@ -4,8 +4,6 @@
   <b>Application of the elsciRL system to a Sailing Simulator.</b>
   <br>
   Visit our <a href="https://elsci.org">website</a> to get started, explore our <a href="https://github.com/pdfosborne/elsciRL-Wiki">open-source Wiki</a> to learn more or join our <a href="https://discord.gg/GgaqcrYCxt">Discord server</a> to connect with the community.
-  <br>
-  <i>In early Alpha Development.</i>
 </div>
 
 <div align="center">  
@@ -17,13 +15,21 @@
 
 </div>
 
-Sailing Simulator:
+## Sailing Simulator
+
+Sourced from:
+
  - https://github.com/topics/sailing-simulator
  - Simple sailing simulator from https://github.com/PPierzc/ai-learns-to-sail
    - https://github.com/PPierzc/ai-learns-to-sail/blob/master/tasks/channel.py
 
+![sailing_overview](https://raw.githubusercontent.com/pdfosborne/elsciRL-App-Sailing/refs/heads/main/prerender/sailing_setup.png)
+
+# Quick Experiment
+
 If setup correctly then the rest is handled by the elsciRL system
 > Run main.py (change experiment call and parameters as needed)
+
 
 # Instruction following
 
