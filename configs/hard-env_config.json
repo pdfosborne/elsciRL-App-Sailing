@@ -1,0 +1,7 @@
+{
+    "environment_size": "N/A",
+    "adapter_select": ["default", "language"],
+    "action_limit": 200,
+    "reward_signal": [1, 0, -0.05],
+    "sub_goal": "None"
+}
