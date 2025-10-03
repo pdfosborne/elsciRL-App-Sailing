@@ -47,4 +47,3 @@ Instructions do not terminate environment so agent can reach end goal if possibl
 - go to the harbor side
 - continue so that the boat is halfway between the center and the edge of the river but on the harbor side with the wind on the starboard side of the boat
 - when halfway between the center and the edge of the river on the harbor side, turn back towards the center so the wind is on the port side
-
